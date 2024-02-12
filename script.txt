@@ -1,0 +1,40 @@
+$(function () {
+  $("#sortable").sortable();
+
+  $("#submitForm").submit(function () {
+    var rankings = [];
+    $("#sortable li").each(function (index) {
+      var orgName = $(this).data("id");
+      var points = 0;
+
+      // for assigning points based on organizational preferences
+      switch (index) {
+        case 0:
+          points = 80;
+          break;
+        case 1:
+          points = 50;
+          break;
+        case 2:
+          points = 40;
+          break;
+        case 3:
+          points = 35;
+          break;
+        default:
+          points = 0;
+          break;
+      }
+
+      rankings.push({ organization: orgName, points: points });
+    });
+
+    // for storing rankings in the hidden input field as JSON
+    $("#rankingsInput").val(JSON.stringify(rankings));
+  });
+});
+function updateValue(sliderId) {
+  const slider = document.getElementById(sliderId);
+  const valueSpan = document.getElementById(sliderId + "Value");
+  valueSpan.innerText = slider.value;
+}
